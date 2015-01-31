@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang = "en" ng-app = "Splitter">
+    <head>
+        <meta charset = "utf-8">
+        <meta http-equiv="X-UA-Compatible" content ="IE-edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>Splitter</title>
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+        <script type ="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
+        <link rel = "stylesheet" href = "style.css">
+        <script type ="text/javascript" src = "splitter.js"></script>
+        <script type ="text/javascript" src = "ui-bootstrap-0.12.0.min.js"></script>
+
+    </head>
+    <body ng-controller = "MainController">        
+        <h1>Splitter</h1>
+        <section class = "roommates">
+            <h2>Roommates</h2>
+            <div class = "roommate" ng-repeat="person in roommates track by $index">
+                <p class = "roommate-name">Name: {{person.name}}  </p>
+                <p>Pays: {{person.money}}  <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a></p>
+            </div>
+            <form class = "roommate" ng-submit = "addPerson()">
+                <input class = "form-control" placeholder = "Name" ng-model = "newName" type="text">
+                <button class = "btn btn-primary" type = "submit">Add Roommate!</button>
+            </form>
+        </section>
+
+        <section class = "groceries">
+            <h2>Groceries</h2>
+
+            <table class = "table table-hover table-responsive food-item">
+                <tr ng-if="food">
+                    <th>Item Name</th>
+                    <th>Cost</th>
+                    <th>Excluded People</th>
+                </tr>
+                <tr ng-repeat = "item in food track by $index">
+                    <td>{{item.name}}</td>
+                    <td>{{item.cost}}</td>
+                    <td>  
+                        <div class="btn-group">
+                            <label class="btn btn-default" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index"  ng-change="calculateMoney()">{{person.name}}</label>
+                        </div>
+                        <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
+                    </td>
+                </tr>
+            </table>
+
+            <form class = "food-item form-inline" ng-submit = "addFood()">
+                <input class = "form-control" placeholder = "Item Name" ng-model="newFood.name" type="text">
+                <input class = "form-control" placeholder = "Cost" ng-model="newFood.cost" type="number">
+                <button class="btn btn-primary" type="submit">Add item!</button>
+            </form>
+        </section>
+        <footer>
+            <div class = "container">
+                <p>Find Splitter on <a href = "https://github.com/DeonHua/Splitter">Github!</a></p>
+                <p>Made with love.</p>
+            </div>
+        </footer>
+    </body>    
+</html>

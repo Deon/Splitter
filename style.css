@@ -1,0 +1,43 @@
+*{
+    text-align: center;
+}
+
+h1{
+    text-align: center;
+}
+
+.roommate{
+    display:inline-block;
+    margin: 10px;
+}
+
+.roommate-name{
+    text-transform: capitalize;
+}
+
+table.food-item{
+    width: 80%;
+    margin: auto auto;
+}
+
+th{
+    text-align: center;
+}
+
+.form-control{
+    margin-bottom: 5px;
+}
+
+form.food-item{
+    margin-top: 20px;
+}
+
+footer{
+    margin-top: 20px;
+    padding: 40px;
+    color: #FFFFFF;
+    background-color: #303F9F;
+
+    width: 100%;
+    
+}
