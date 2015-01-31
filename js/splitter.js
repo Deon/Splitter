@@ -1,7 +1,7 @@
 angular.module("Splitter", ['ui.bootstrap'])
 .controller("MainController", ['$scope', function($scope){
 
-    //Person object - has a name and money. 
+    //Person object - has a name and money.
     var Person = function (name){
         this.name = name;
         this.money = 0.00;
@@ -14,12 +14,12 @@ angular.module("Splitter", ['ui.bootstrap'])
         this.people = new Array ($scope.roommates.length);
         //Assume everyone wants the new items that are added.
         for (var i = 0; i < $scope.roommates.length; i++){
-            this.people[i] = false;   
+            this.people[i] = false;
         }
     }
 
-    $scope.roommates = [new Person("Jane"), new Person("Bob")];
-    $scope.food = [new GroceryItem("Bread", 20), new GroceryItem("Arizona", 20)];
+    $scope.roommates = [];
+    $scope.food = [];
     $scope.newName;
     $scope.newFood;
 
@@ -28,25 +28,25 @@ angular.module("Splitter", ['ui.bootstrap'])
             $scope.roommates.push(new Person($scope.newName));
             $scope.newName = "";
         }
-        
+
         //Make the new array, copying values from previous array.
         for (var item = 0; item < $scope.food.length; item++){
             var newArray = new Array ($scope.roommates.length);
             for (var person = 0; person < $scope.roommates.length; person++){
-                newArray[person] = $scope.food[item].people[person];   
+                newArray[person] = $scope.food[item].people[person];
             }
             newArray[$scope.roommates.length-1] = false;
             $scope.food[item].people = newArray;
         }
-        
+
         $scope.calculateMoney();
     };
 
     $scope.removePerson = function(index){
         if ($scope.roommates){
-            $scope.roommates = $scope.roommates.slice(0, index).concat($scope.roommates.slice(index+1)); 
+            $scope.roommates = $scope.roommates.slice(0, index).concat($scope.roommates.slice(index+1));
             for (var item = 0; item < $scope.food.length; item++){
-                $scope.food[item].people = $scope.food[item].people.slice(0, index).concat($scope.food[item].people.slice(index+1)); 
+                $scope.food[item].people = $scope.food[item].people.slice(0, index).concat($scope.food[item].people.slice(index+1));
             }
         }
         $scope.calculateMoney();
@@ -62,7 +62,7 @@ angular.module("Splitter", ['ui.bootstrap'])
 
     $scope.removeFood = function(index){
         if ($scope.food){
-            $scope.food = $scope.food.slice(0, index).concat($scope.food.slice(index+1)); 
+            $scope.food = $scope.food.slice(0, index).concat($scope.food.slice(index+1));
         }
         $scope.calculateMoney();
     };
@@ -88,7 +88,7 @@ angular.module("Splitter", ['ui.bootstrap'])
 
             for (var person = 0; person < $scope.roommates.length; person++){
                 if ($scope.food[item].people[person]=== false){
-                    $scope.roommates[person].money += costPerPerson;   
+                    $scope.roommates[person].money += costPerPerson;
                 }
             }
         }

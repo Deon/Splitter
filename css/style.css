@@ -4,6 +4,9 @@
 
 h1{
     text-align: center;
+    font-family: AdamCGPro, "Helvetica Neue", Arial, sans-serif;
+    line-height: 110%;
+    font-size: 5em;
 }
 
 .roommate{
@@ -16,7 +19,7 @@ h1{
 }
 
 table.food-item{
-    width: 80%;
+    width: 100%;
     margin: auto auto;
 }
 
@@ -37,7 +40,25 @@ footer{
     padding: 40px;
     color: #FFFFFF;
     background-color: #303F9F;
-
     width: 100%;
-    
 }
+
+footer a{
+    color: #FFFFFF;
+}
+
+footer a:hover{
+    text-decoration: none;
+    color: #d0d0d0;
+}
+
+
+.container{
+    width: 95%;
+}
+
+@font-face {
+    font-family: AdamCGPro;
+    src: url(fonts/ADAM.CGPRO.otf);
+}
+

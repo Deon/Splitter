@@ -1,5 +1,4 @@
 # Splitter
-=============
 
 Trying to figure out how to split costs? Sounds easy enough.
 
@@ -12,7 +11,7 @@ Simply add people to split the costs with, and some items that you'd like to spl
 * Adding unit and E2E tests (#2)
 * Round the number each person pays (#3)
 * Allow editing of items (#4)
-* Allow users to choose "Excluded people" when making a new item.
+* Allow users to choose "Excluded people" when making a new item. (#5)
 
 ### Tech
 
