@@ -2,15 +2,59 @@
     text-align: center;
 }
 
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body{
+    margin-bottom: 120px;
+}
+
+
 h1{
     text-align: center;
-    font-family: AdamCGPro, "Helvetica Neue", Arial, sans-serif;
+    font-family: "Helvetica Neue", Arial, sans-serif;
     line-height: 110%;
     font-size: 5em;
+    color: #FFFFFF;
+}
+
+header{
+    background-color: #3F51B5;
+    padding-top: 10px;
+    padding-bottom: 20px;
+}
+
+.section-header{
+    font-size:3em;
+}
+
+th, td, input[type=text], input[type=number], p, button{
+    font-size: 1.3em;
+}
+
+.btn{
+    font-size: 1em;
+}
+
+input[type=text]:focus, input[type=number]:focus{
+    border-bottom-color: #3F51B5;
+}
+
+.btn{
+    border-radius: 0;
+}
+
+.btn-primary{
+    background-color: #5C6BC0;
+}
+
+.btn-primary:hover, .btn-primary:active{
+    background-color: #3F51B5;
 }
 
 .roommate{
-    display:inline-block;
     margin: 10px;
 }
 
@@ -35,30 +79,34 @@ form.food-item{
     margin-top: 20px;
 }
 
-footer{
-    margin-top: 20px;
-    padding: 40px;
+footer.page-footer{
     color: #FFFFFF;
-    background-color: #303F9F;
+    background-color: #3F51B5;
+    height: 120px;
+    position: absolute;
+    bottom: 0;
     width: 100%;
+}
+
+footer .container{
+    padding-bottom: 15px;
 }
 
 footer a{
     color: #FFFFFF;
 }
 
-footer a:hover{
+footer a:hover, footer a:active{
     text-decoration: none;
     color: #d0d0d0;
 }
 
-
-.container{
-    width: 95%;
+.glyphicon-trash{
+    float: right;
 }
 
-@font-face {
-    font-family: AdamCGPro;
-    src: url(fonts/ADAM.CGPRO.otf);
+/* Removes arrows from input type = number*/
+input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0; 
 }
-

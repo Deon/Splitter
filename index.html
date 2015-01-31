@@ -7,67 +7,76 @@
 
         <title>Splitter</title>
 
+
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-        <link rel = "stylesheet" href = "css/style.css">
+        <link rel="stylesheet" href="sass/materialize.css">
+        <link rel="stylesheet" href = "css/style.css">
 
         <script type ="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
         <script type ="text/javascript" src = "js/splitter.js"></script>
         <script type ="text/javascript" src = "js/ui-bootstrap-0.12.0.min.js"></script>
 
     </head>
-    <body ng-controller = "MainController">        
-        <h1>Splitter</h1>
-        <div class = "container">
+    <body ng-controller = "MainController">
+        <header>
+            <h1>Splitter</h1>
+        </header>
+
+        <div class = "container" ng-cloak>
             <div class = "row">
-                <section class = "col-md-2 roommates">
-                    <h2>Roommates</h2>
-                    <div class = "roommate" ng-repeat="person in roommates track by $index">
-                        <p class = "roommate-name">Name: {{person.name}}  </p>
-                        <p>Pays: {{person.money}}  <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a></p>
+                <section class = "col l3 roommates">
+                    <h2 class = "section-header">Roommates</h2>
+                    <div class = "roommate card-panel" ng-repeat="person in roommates track by $index">
+                        <p class = "roommate-name">{{person.name}} - ${{person.money}} <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a></p>
                     </div>
                     <form class = "roommate" ng-submit = "addPerson()">
-                        <input class = "form-control" placeholder = "Name" ng-model = "newName" type="text">
-                        <button class = "btn btn-primary" type = "submit">Add Roommate!</button>
+                        <input class = "form-control input input" placeholder = "Name" ng-model = "newName" type="text">
+                        <button class = "btn btn-lg btn-primary" type = "submit">Add Roommate!</button>
                     </form>
                 </section>
-                <section class = "col-md-10 groceries">
-                    <h2>Groceries</h2>
+                <section class = "col l9 groceries">
+                    <h2 class = "section-header">Groceries</h2>
 
-                    <table class = "table table-hover table-responsive food-item">
-                        <tr ng-if="food">
-                            <th>Item Name</th>
-                            <th>Cost</th>
-                            <th>Excluded People</th>
-                        </tr>
-                        <tr ng-repeat = "item in food track by $index">
-                            <td>{{item.name}}</td>
-                            <td>{{item.cost}}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <label class="btn btn-default" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index"  ng-change="calculateMoney()">{{person.name}}</label>
-                                </div>
-                                <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
-                            </td>
-                        </tr>
+                    <table class = "striped centered responsive-table food-item">
+                        <thead>
+                            <tr ng-if="food">
+                                <th>Item Name</th>
+                                <th>Cost</th>
+                                <th>Excluded People</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat = "item in food track by $index">
+                                <td>{{item.name}}</td>
+                                <td>{{item.cost}}</td>
+                                <td>
+                                    <div class="btn-group">
+                                        <label class="btn btn-default" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index"  ng-change="calculateMoney()">{{person.name}}</label>
+                                    </div>
+                                    <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
+                                </td>
+                            </tr>
+                        </tbody>
                     </table>
 
                     <form class = "food-item form-inline" ng-submit = "addFood()">
-                        <input class = "form-control" placeholder = "Item Name" ng-model="newFood.name" type="text">
-                        <input class = "form-control" placeholder = "Cost" ng-model="newFood.cost" type="number" step = "any" min = "0">
-                        <button class="btn btn-primary" type="submit">Add item!</button>
+                        <input class = "form-control input" placeholder = "Item Name" ng-model="newFood.name" type="text">
+                        <input class = "form-control input" placeholder = "Cost" ng-model="newFood.cost" type="number" step = "any" min = "0">
+                        <button class="btn btn-lg btn-primary" type="submit">Add item!</button>
                     </form>
                 </section>
             </div>
         </div>
-        <footer class = "navbar navbar-fixed-bottom">
+
+        <footer class = "page-footer">
             <div class = "container">
-                <div class = "row">
-                    <div class = "col-md-12">
-                        <p>Find Splitter on <a href = "https://github.com/DeonHua/Splitter">Github!</a></p>
-                        <p>Made with love.</p>
-                    </div>
-                </div>
+                <p>Find Splitter on <a href = "https://github.com/DeonHua/Splitter">Github!</a></p>
+            </div>
+            <div class = "footer-copyright"> 
+                <p>Made with love.</p>
             </div>
         </footer>
-    </body>    
+    </body>
+
+
 </html>
