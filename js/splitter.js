@@ -91,6 +91,11 @@ angular.module("Splitter", ['ui.bootstrap'])
                     $scope.roommates[person].money += costPerPerson;
                 }
             }
+
+            for (var person = 0; person < $scope.roommates.length; person++){
+                $scope.roommates[person].money = $scope.roommates[person].money.toFixed(2);
+            }
         }
+
     };
 }]);

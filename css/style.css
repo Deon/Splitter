@@ -20,6 +20,10 @@ h1{
     color: #FFFFFF;
 }
 
+.instructions{
+    margin-top: 20px;
+}
+
 header{
     background-color: #3F51B5;
     padding-top: 10px;
@@ -30,7 +34,7 @@ header{
     font-size:3em;
 }
 
-th, td, input[type=text], input[type=number], p, button{
+th, td, input[type=text], input[type=number], p{
     font-size: 1.3em;
 }
 
@@ -44,6 +48,10 @@ input[type=text]:focus, input[type=number]:focus{
 
 .btn{
     border-radius: 0;
+}
+
+button.btn{
+    font-size: 1.3em;
 }
 
 .btn-primary{

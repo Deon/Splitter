@@ -24,6 +24,12 @@
 
         <div class = "container" ng-cloak>
             <div class = "row">
+                <div class = "instructions">
+                    <p>Trying to figure out how to split costs? Sounds easy enough.</p>
+                    <p>What if the costs aren't being split evenly? That's another story. That's why there's Splitter.</p>
+                    <p>Simply add people to split the costs with, and some items that you'd like to split the cost of.</p>
+                </div>
+                
                 <section class = "col l3 roommates">
                     <h2 class = "section-header">Roommates</h2>
                     <div class = "roommate card-panel" ng-repeat="person in roommates track by $index">
@@ -39,7 +45,7 @@
 
                     <table class = "striped centered responsive-table food-item">
                         <thead>
-                            <tr ng-if="food">
+                            <tr ng-if="food.length">
                                 <th>Item Name</th>
                                 <th>Cost</th>
                                 <th>Excluded People</th>
