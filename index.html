@@ -19,7 +19,7 @@
     </head>
     <body ng-controller = "MainController">
         <header>
-            <h1>Splitter</h1>
+            <h1><a href = "/">Splitter</a></h1>
         </header>
 
         <div class = "container" ng-cloak>
@@ -29,14 +29,27 @@
                     <p>What if the costs aren't being split evenly? That's another story. That's why there's Splitter.</p>
                     <p>Simply add people to split the costs with, and some items that you'd like to split the cost of.</p>
                 </div>
-                
+
                 <section class = "col l3 roommates">
                     <h2 class = "section-header">Roommates</h2>
                     <div class = "roommate card-panel" ng-repeat="person in roommates track by $index">
-                        <p class = "roommate-name">{{person.name}} - ${{person.money}} <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a></p>
+                        <div class = "regular-display-card" ng-hide="person.isEditing">
+                            <p class = "roommate-name">{{person.name}} - ${{person.money}}
+                                <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a>
+                                <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-click="editPerson($index)"></a>                            
+                            </p>
+                        </div>
+                        <div class = "edit-display-card" ng-show="person.isEditing">
+                            <input class = "form-control input" placeholder = "Name" ng-model = "person.editName" type="text">                                                          
+                            <p>
+                                <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" ng-click="savePerson($index)"></a> 
+                                <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a>
+                            </p>
+                        </div>
+
                     </div>
                     <form class = "roommate" ng-submit = "addPerson()">
-                        <input class = "form-control input input" placeholder = "Name" ng-model = "newName" type="text">
+                        <input class = "form-control input" placeholder = "Name" ng-model = "newName" type="text">
                         <button class = "btn btn-lg btn-primary" type = "submit">Add Roommate!</button>
                     </form>
                 </section>
@@ -53,13 +66,21 @@
                         </thead>
                         <tbody>
                             <tr ng-repeat = "item in food track by $index">
-                                <td>{{item.name}}</td>
-                                <td>{{item.cost}}</td>
+                                <td>
+                                    <p ng-hide="item.isEditing">{{item.name}}</p>
+                                    <input class = "form-control input" placeholder = "Item Name" ng-model="item.editName" type="text" ng-show="item.isEditing">
+                                </td>
+                                <td>
+                                    <p ng-hide="item.isEditing">${{item.cost}}</p>
+                                    <input class = "form-control input" placeholder = "Cost" ng-model="item.editCost" type="number" step = "any" min = "0" ng-show="item.isEditing">
+                                </td>
                                 <td>
                                     <div class="btn-group">
-                                        <label class="btn btn-default" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index"  ng-change="calculateMoney()">{{person.name}}</label>
+                                        <label class="btn btn-default" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index" ng-change="calculateMoney()">{{person.name}}</label>
                                     </div>
                                     <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
+                                    <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="item.isEditing" ng-click="editFood($index)"></a>
+                                    <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" ng-show="item.isEditing" ng-click="saveFood($index)"></a> 
                                 </td>
                             </tr>
                         </tbody>
@@ -67,7 +88,9 @@
 
                     <form class = "food-item form-inline" ng-submit = "addFood()">
                         <input class = "form-control input" placeholder = "Item Name" ng-model="newFood.name" type="text">
+
                         <input class = "form-control input" placeholder = "Cost" ng-model="newFood.cost" type="number" step = "any" min = "0">
+
                         <button class="btn btn-lg btn-primary" type="submit">Add item!</button>
                     </form>
                 </section>

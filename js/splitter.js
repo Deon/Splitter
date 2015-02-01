@@ -24,7 +24,7 @@ angular.module("Splitter", ['ui.bootstrap'])
     $scope.newFood;
 
     $scope.addPerson = function(){
-        if ($scope.roommates.length < 7 && $scope.newName){
+        if ($scope.roommates.length < 10 && $scope.newName){
             $scope.roommates.push(new Person($scope.newName));
             $scope.newName = "";
         }
@@ -41,6 +41,17 @@ angular.module("Splitter", ['ui.bootstrap'])
 
         $scope.calculateMoney();
     };
+    
+    $scope.editPerson = function(index){
+        $scope.roommates[index].isEditing = true;   
+        $scope.roommates[index].editName = $scope.roommates[index].name;
+    };
+    
+    $scope.savePerson = function(index){
+        $scope.roommates[index].name = $scope.roommates[index].editName;        
+        $scope.roommates[index].isEditing = false;  
+        
+    };
 
     $scope.removePerson = function(index){
         if ($scope.roommates){
@@ -54,10 +65,23 @@ angular.module("Splitter", ['ui.bootstrap'])
 
     $scope.addFood = function(){
         if ($scope.newFood && $scope.newFood.name && $scope.newFood.cost > 0){
-            $scope.food.push(new GroceryItem ($scope.newFood.name, $scope.newFood.cost));
+            $scope.food.push(new GroceryItem ($scope.newFood.name, parseFloat($scope.newFood.cost.toFixed(2))));
             $scope.newFood = null;
         }
         $scope.calculateMoney();
+    };
+    
+    $scope.editFood= function(index){
+        $scope.food[index].isEditing = true;   
+        $scope.food[index].editName = $scope.food[index].name;
+        $scope.food[index].editCost = $scope.food[index].cost;
+    };
+    
+    $scope.saveFood = function(index){
+        $scope.food[index].name = $scope.food[index].editName;
+        $scope.food[index].cost = parseFloat($scope.food[index].editCost.toFixed(2)); 
+        $scope.food[index].isEditing = false;  
+        $scope.calculateMoney();        
     };
 
     $scope.removeFood = function(index){
@@ -68,7 +92,6 @@ angular.module("Splitter", ['ui.bootstrap'])
     };
 
     $scope.calculateMoney = function(){
-        console.log($scope.food);
         for (var person = 0; person < $scope.roommates.length; person++){
             $scope.roommates[person].money = 0;
         }
@@ -84,7 +107,6 @@ angular.module("Splitter", ['ui.bootstrap'])
             }
 
             costPerPerson = $scope.food[item].cost/numPeoplePaying;
-            console.log(costPerPerson);
 
             for (var person = 0; person < $scope.roommates.length; person++){
                 if ($scope.food[item].people[person]=== false){
@@ -93,7 +115,7 @@ angular.module("Splitter", ['ui.bootstrap'])
             }
 
             for (var person = 0; person < $scope.roommates.length; person++){
-                $scope.roommates[person].money = $scope.roommates[person].money.toFixed(2);
+                $scope.roommates[person].money = parseFloat($scope.roommates[person].money.toFixed(2));
             }
         }
 
