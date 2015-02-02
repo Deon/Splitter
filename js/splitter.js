@@ -1,4 +1,4 @@
-angular.module("Splitter", ['ui.bootstrap'])
+angular.module("Splitter", [])
 .controller("MainController", ['$scope', function($scope){
 
     //Person object - has a name and money.
