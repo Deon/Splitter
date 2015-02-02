@@ -6132,18 +6132,18 @@ span.badge {
 .container {
   padding: 0 1.5rem;
   margin: auto auto;
-  width: 90%; }
+  width: 95%; }
 
 @media only screen and (min-width : 601px) {
   /* line 7, C:/Users/Deon/Documents/GitHub/Splitter/css/components/grid */
   .container {
-    width: 90%; }
+    width: 95%; }
  }
 
 @media only screen and (min-width : 993px) {
   /* line 12, C:/Users/Deon/Documents/GitHub/Splitter/css/components/grid */
   .container {
-    width: 90%; }
+    width: 95%; }
  }
 
 /* line 16, C:/Users/Deon/Documents/GitHub/Splitter/css/components/grid */
