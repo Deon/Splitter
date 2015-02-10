@@ -13,9 +13,6 @@
         <link rel="stylesheet" href = "css/style.css">
 
         <script type ="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
-        <script type="text/javascript" src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
-        <script type ="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-        
         <script type ="text/javascript" src = "js/splitter.js"></script>
         <script type ="text/javascript" src = "js/ui-bootstrap-0.12.0.min.js"></script>
 
@@ -64,6 +61,7 @@
                             <tr ng-if="food.length">
                                 <th>Item Name</th>
                                 <th>Cost</th>
+                                <th>Tax Rate</th>
                                 <th>Excluded People</th>
                             </tr>
                         </thead>
@@ -75,11 +73,20 @@
                                 </td>
                                 <td>
                                     <p ng-hide="item.isEditing">${{item.cost}}</p>
-                                    <input class = "form-control input" placeholder = "Cost" ng-model="item.editCost" type="number" step = "any" min = "0" ng-show="item.isEditing">
+                                    <input class = "form-control input edit-cost" placeholder = "Cost" ng-model="item.editCost" type="text" ng-show="item.isEditing">
+                                </td>
+                                <td class = "tax-column">
+                                    <select class = "form-control tax-select" ng-model="item.taxRate" ng-change="calculateMoney()">
+                                        <option class = "form-control" value = "0">0%</option>
+                                        <option class = "form-control" value = "0.05">5%</option>
+                                        <option class = "form-control" value = "0.08">8%</option>
+                                        <option class = "form-control" value = "0.13">13%</option>
+                                    </select>
                                 </td>
                                 <td>
                                     <div class="btn-group">
-                                        <label class="btn btn-default" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index" ng-change="calculateMoney()">{{person.name}}</label>
+                                        <label class="btn btn-default roommate-button" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index"
+                                               ng-change="calculateMoney()">{{person.name}}</label>
                                     </div>
                                     <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
                                     <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="item.isEditing" ng-click="editFood($index)"></a>
@@ -92,7 +99,7 @@
                     <form class = "food-item form-inline" ng-submit = "addFood()">
                         <input class = "form-control input" placeholder = "Item Name" ng-model="newFood.name" type="text">
 
-                        <input class = "form-control input" placeholder = "Cost" ng-model="newFood.cost" type="number" step = "any" min = "0">
+                        <input class = "form-control input" placeholder = "Cost" ng-model="newFood.cost" type="text">
 
                         <button class="btn btn-lg btn-primary" type="submit">Add item!</button>
                     </form>
