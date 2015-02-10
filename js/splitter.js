@@ -1,10 +1,10 @@
-angular.module("Splitter", ['ui.bootstrap'])
+angular.module("Splitter", ["ui.bootstrap"])
 .controller("MainController", ['$scope', function($scope){
 
     //Person object - has a name and money.
     var Person = function (name){
         this.name = name;
-        this.money = 0.00;
+        this.money = "0.00";
     }
 
     //GroceryItem object - has a cost and excludePeople
@@ -12,6 +12,8 @@ angular.module("Splitter", ['ui.bootstrap'])
         this.name = name;
         this.cost = cost;
         this.people = new Array ($scope.roommates.length);
+        this.taxRate = 0.13; // Assume tax rate is HST (13%)
+
         //Assume everyone wants the new items that are added.
         for (var i = 0; i < $scope.roommates.length; i++){
             this.people[i] = false;
@@ -41,16 +43,16 @@ angular.module("Splitter", ['ui.bootstrap'])
 
         $scope.calculateMoney();
     };
-    
+
     $scope.editPerson = function(index){
         $scope.roommates[index].isEditing = true;   
         $scope.roommates[index].editName = $scope.roommates[index].name;
     };
-    
+
     $scope.savePerson = function(index){
         $scope.roommates[index].name = $scope.roommates[index].editName;        
         $scope.roommates[index].isEditing = false;  
-        
+
     };
 
     $scope.removePerson = function(index){
@@ -64,23 +66,26 @@ angular.module("Splitter", ['ui.bootstrap'])
     };
 
     $scope.addFood = function(){
-        if ($scope.newFood && $scope.newFood.name && $scope.newFood.cost > 0){
-            $scope.food.push(new GroceryItem ($scope.newFood.name, parseFloat($scope.newFood.cost.toFixed(2))));
+        if ($scope.newFood && $scope.newFood.name && !isNaN($scope.newFood.cost) && parseFloat($scope.newFood.cost) > 0){
+            $scope.food.push(new GroceryItem ($scope.newFood.name, parseFloat($scope.newFood.cost).toFixed(2)));
             $scope.newFood = null;
         }
         $scope.calculateMoney();
     };
-    
+
     $scope.editFood= function(index){
+        console.log($scope.food[index]);
         $scope.food[index].isEditing = true;   
         $scope.food[index].editName = $scope.food[index].name;
-        $scope.food[index].editCost = $scope.food[index].cost;
+        $scope.food[index].editCost = parseFloat($scope.food[index].cost);
     };
-    
+
     $scope.saveFood = function(index){
         $scope.food[index].name = $scope.food[index].editName;
-        $scope.food[index].cost = parseFloat($scope.food[index].editCost.toFixed(2)); 
-        $scope.food[index].isEditing = false;  
+        if (!isNaN($scope.food[index].editCost)){
+            $scope.food[index].cost = parseFloat($scope.food[index].editCost).toFixed(2);
+            $scope.food[index].isEditing = false;
+        }
         $scope.calculateMoney();        
     };
 
@@ -92,6 +97,8 @@ angular.module("Splitter", ['ui.bootstrap'])
     };
 
     $scope.calculateMoney = function(){
+
+        //Zero out
         for (var person = 0; person < $scope.roommates.length; person++){
             $scope.roommates[person].money = 0;
         }
@@ -106,18 +113,18 @@ angular.module("Splitter", ['ui.bootstrap'])
                 }
             }
 
-            costPerPerson = $scope.food[item].cost/numPeoplePaying;
+            costPerPerson = parseFloat($scope.food[item].cost)*(1+parseFloat($scope.food[item].taxRate))/numPeoplePaying;
 
             for (var person = 0; person < $scope.roommates.length; person++){
-                if ($scope.food[item].people[person]=== false){
+                if ($scope.food[item].people[person] === false){
                     $scope.roommates[person].money += costPerPerson;
                 }
             }
-
-            for (var person = 0; person < $scope.roommates.length; person++){
-                $scope.roommates[person].money = parseFloat($scope.roommates[person].money.toFixed(2));
-            }
+        }
+        for (var person = 0; person < $scope.roommates.length; person++){
+            $scope.roommates[person].money = $scope.roommates[person].money.toFixed(2);
         }
 
     };
+
 }]);
