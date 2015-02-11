@@ -38,7 +38,7 @@ header{
     border-radius: 0;
 }
 
-th, input[type=text], input[type=number], p, .btn-group > .btn, td > a.btn{
+th, input[type=text], input[type=number], p, .btn-group > .btn, td > a.btn, .row .btn{
     font-size: 1.3em;
 }
 
@@ -67,6 +67,19 @@ button.btn{
     margin: 10px;
 }
 
+.roommate.card-panel, .food.card-panel{
+    padding: 10px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+.roommate.row{
+    margin: 0;
+    padding: 0;
+}
+.roommate.col-md-8, .roommate.col-md-4, .food .col-xs-8, .food .col-xs-4{
+    padding: 0;
+    margin: 0;
+}
 .roommate-name, .roommate-button{
     text-transform: capitalize;
     word-wrap: break-word;
@@ -116,6 +129,9 @@ a:hover, a:active{
     float:none;
 }
 
+.edit-display-card p {
+    text-align: center;
+}
 /* Removes arrows from input type = number*/
 input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer-spin-button {
     -webkit-appearance: none;
@@ -133,5 +149,10 @@ input[type=number]::-webkit-inner-spin-button, input[type=number]::-webkit-outer
     width: 100px;
 }
 
+.visible-mobile{
+    display: none !important;
+}
 
-
+.visible-desktop{
+    display: block !important;
+}

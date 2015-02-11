@@ -11,6 +11,7 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
         <link rel="stylesheet" href="css/materialize.min.css">
         <link rel="stylesheet" href = "css/style.css">
+        <link rel="stylesheet" href="css/mobile.css">
 
         <script type ="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.11/angular.min.js"></script>
         <script type ="text/javascript" src = "js/splitter.js"></script>
@@ -25,27 +26,34 @@
         <div class = "container-fluid" ng-cloak>
             <div class = "row">
                 <div class = "instructions">
-                    <p>Trying to figure out how to split costs? Sounds easy enough.</p>
-                    <p>What if the costs aren't being split evenly? That's another story. That's why there's Splitter.</p>
-                    <p>Simply add people to split the costs with, and some items that you'd like to split the cost of.</p>
+                    <p>Trying to figure out how to split costs unevenly? That's what Splitter's for. Simply add some people, some food, and the rest is a piece of cake.</p>
                 </div>
 
                 <section class = "col-md-3 roommates">
                     <h2 class = "section-header">Roommates</h2>
                     <div class = "roommate card-panel" ng-repeat="person in roommates track by $index">
                         <div class = "regular-display-card" ng-hide="person.isEditing">
-                            <p class = "roommate-name">{{person.name}} - ${{person.money}}
-                                <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a>
-                                <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-click="editPerson($index)"></a>                            
-                            </p>
+                            <div class = "roommate row">
+                                <div class = "roommate col-xs-8 col-md-8">
+                                    <p class = "roommate-name">{{person.name}} - ${{person.money}}
+
+                                    </p>
+                                </div>
+                                <div class = "roommate col-xs-4 col-md-4">
+                                    <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a>
+                                    <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-click="editPerson($index)"></a>
+                                </div>
+                            </div>
+
+
                         </div>
-                        <div class = "edit-display-card" ng-show="person.isEditing">
+                        <form class = "edit-display-card" ng-submit="savePerson($index)" ng-show="person.isEditing">
                             <input class = "form-control input" placeholder = "Name" ng-model = "person.editName" type="text">                                                          
                             <p>
-                                <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" ng-click="savePerson($index)"></a> 
+                                <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" type="submit" ng-click="savePerson($index)"></a>
                                 <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removePerson($index)"></a>
                             </p>
-                        </div>
+                        </form>
 
                     </div>
                     <form class = "roommate" ng-submit = "addPerson()">
@@ -53,48 +61,102 @@
                         <button class = "btn btn-lg btn-primary" type = "submit">Add Roommate!</button>
                     </form>
                 </section>
+
+
                 <section class = "col-md-9 groceries">
                     <h2 class = "section-header">Groceries</h2>
 
-                    <table class = "striped centered responsive-table food-item">
-                        <thead>
-                            <tr ng-if="food.length">
-                                <th>Item Name</th>
-                                <th>Cost</th>
-                                <th>Tax Rate</th>
-                                <th>Excluded People</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr ng-repeat = "item in food track by $index">
-                                <td>
-                                    <p ng-hide="item.isEditing">{{item.name}}</p>
-                                    <input class = "form-control input" placeholder = "Item Name" ng-model="item.editName" type="text" ng-show="item.isEditing">
-                                </td>
-                                <td>
-                                    <p ng-hide="item.isEditing">${{item.cost}}</p>
-                                    <input class = "form-control input edit-cost" placeholder = "Cost" ng-model="item.editCost" type="text" ng-show="item.isEditing">
-                                </td>
-                                <td class = "tax-column">
-                                    <select class = "form-control tax-select" ng-model="item.taxRate" ng-change="calculateMoney()">
-                                        <option class = "form-control" value = "0">0%</option>
-                                        <option class = "form-control" value = "0.05">5%</option>
-                                        <option class = "form-control" value = "0.08">8%</option>
-                                        <option class = "form-control" value = "0.13">13%</option>
-                                    </select>
-                                </td>
-                                <td>
+                    <!-- Mobile View -->
+                    <div class = "food-item visible-mobile">
+                        <p>Simply touch the names of those who won't be paying for that item. Also, choose your tax rate.</p>
+                        <div class = "food card-panel" ng-repeat="item in food track by $index">
+                            <div class = "not-editing" ng-hide="item.isEditing">
+                                <div class = "row">
+
+                                    <div class = "col-xs-8">
+                                        <p>{{item.name}}</p>
+                                    </div>
+                                    <div class = "col-xs-4">
+
+
+                                        <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
+                                        <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="item.isEditing" ng-click="editFood($index)"></a>
+                                        <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" ng-show="item.isEditing" ng-click="saveFood($index)"></a>
+                                    </div>
+                                </div>
+                                <div class = "row">
+                                    <div class = "col-xs-6">
+                                        <p>${{item.cost}}</p>
+                                    </div>
+                                    <div class = "col-xs-6">
+                                        <select class = "form-control tax-select" ng-model="item.taxRate" ng-change="calculateMoney()">
+                                            <option class = "form-control" value = "0">0%</option>
+                                            <option class = "form-control" value = "0.05">5%</option>
+                                            <option class = "form-control" value = "0.08">8%</option>
+                                            <option class = "form-control" value = "0.13">13%</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class = "row">
                                     <div class="btn-group">
                                         <label class="btn btn-default roommate-button" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index"
                                                ng-change="calculateMoney()">{{person.name}}</label>
                                     </div>
+                                </div>
+                            </div>
+                            <div class = "editing" ng-show="item.isEditing">
+                                <input class = "form-control input" placeholder = "Item Name" ng-model="item.editName" type="text">
+                                <input class = "form-control input edit-cost" placeholder = "Cost" ng-model="item.editCost" type="text">
+                                <p>
                                     <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
-                                    <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="item.isEditing" ng-click="editFood($index)"></a>
-                                    <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" ng-show="item.isEditing" ng-click="saveFood($index)"></a> 
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
+                                    <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" ng-click="saveFood($index)"></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Desktop View -->
+                    <div class = "visible-desktop">
+                        <table class = "striped centered responsive-tablefood-item">
+                            <thead>
+                                <tr ng-if="food.length">
+                                    <th>Item Name</th>
+                                    <th>Cost</th>
+                                    <th>Tax Rate</th>
+                                    <th>Excluded People</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat = "item in food track by $index">
+                                    <td>
+                                        <p ng-hide="item.isEditing">{{item.name}}</p>
+                                        <input class = "form-control input" placeholder = "Item Name" ng-model="item.editName" type="text" ng-show="item.isEditing">
+                                    </td>
+                                    <td>
+                                        <p ng-hide="item.isEditing">${{item.cost}}</p>
+                                        <input class = "form-control input edit-cost" placeholder = "Cost" ng-model="item.editCost" type="text" ng-show="item.isEditing">
+                                    </td>
+                                    <td class = "tax-column">
+                                        <select class = "form-control tax-select" ng-model="item.taxRate" ng-change="calculateMoney()">
+                                            <option class = "form-control" value = "0">0%</option>
+                                            <option class = "form-control" value = "0.05">5%</option>
+                                            <option class = "form-control" value = "0.08">8%</option>
+                                            <option class = "form-control" value = "0.13">13%</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <div class="btn-group">
+                                            <label class="btn btn-default roommate-button" ng-model="item.people[$index]" btn-checkbox ng-repeat="person in roommates track by $index"
+                                                   ng-change="calculateMoney()">{{person.name}}</label>
+                                        </div>
+                                        <a class="btn btn-default glyphicon glyphicon-trash" aria-hidden="true" ng-click="removeFood($index)"></a>
+                                        <a class="btn btn-default glyphicon glyphicon-pencil" aria-hidden="true" ng-hide="item.isEditing" ng-click="editFood($index)"></a>
+                                        <a class="btn btn-default glyphicon glyphicon-ok" aria-hidden="true" ng-show="item.isEditing" ng-click="saveFood($index)"></a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                     <form class = "food-item form-inline" ng-submit = "addFood()">
                         <input class = "form-control input" placeholder = "Item Name" ng-model="newFood.name" type="text">
@@ -115,6 +177,16 @@
                 <p>Made with love.</p>
             </div>
         </footer>
+        <script>
+            (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+                (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+                m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+                                    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+            ga('create', 'UA-59154268-2', 'auto');
+            ga('send', 'pageview');
+
+        </script>
     </body>
 
 
