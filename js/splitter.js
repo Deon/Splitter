@@ -12,7 +12,7 @@ angular.module("Splitter", ["ui.bootstrap"])
         this.name = name;
         this.cost = cost;
         this.people = new Array ($scope.roommates.length);
-        this.taxRate = 0.13; // Assume tax rate is HST (13%)
+        this.taxRate = 0; // Assume no tax.
 
         //Assume everyone wants the new items that are added.
         for (var i = 0; i < $scope.roommates.length; i++){
@@ -124,7 +124,6 @@ angular.module("Splitter", ["ui.bootstrap"])
         for (var person = 0; person < $scope.roommates.length; person++){
             $scope.roommates[person].money = $scope.roommates[person].money.toFixed(2);
         }
-
     };
 
 }]);
